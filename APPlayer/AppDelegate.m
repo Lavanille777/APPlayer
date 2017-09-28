@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-
+#import "FavoritesVC.h"
+#import "MenuView.h"
 @interface AppDelegate ()
 
 @end
@@ -16,7 +17,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[[FavoritesVC alloc]init]];
+    self.window.rootViewController = nav;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
