@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 #import "ControllerBar.h"
 
 @interface PlayerVC : UIViewController
 @property (nonatomic ,strong) AVPlayer *player;
 @property (nonatomic ,strong) AVPlayerLayer *playerLayer;
 @property (nonatomic ,strong) AVPlayerItem *playerItem;
+@property (nonatomic ,strong) ControllerBar *cbBottom;
+@property (nonatomic) BOOL playOrPauseFlag;
 @end

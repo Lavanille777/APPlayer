@@ -1,7 +1,7 @@
 //
 //  FavoritesInnerVC.m
 //  APPlayer
-//
+//  收藏夹选集页
 //  Created by lavanille on 2017/9/28.
 //  Copyright © 2017年 lavanille. All rights reserved.
 //
@@ -31,6 +31,7 @@
         make.centerX.equalTo(self.view.mas_centerX);
         make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 560));
     }];
+    
     // Do any additional setup after loading the view.
 }
 

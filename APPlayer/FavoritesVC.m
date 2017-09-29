@@ -1,13 +1,14 @@
 //
 //  FavoritesVC.m
 //  APPlayer
-//
+//  收藏夹页，主页
 //  Created by lavanille on 2017/9/27.
 //  Copyright © 2017年 lavanille. All rights reserved.
 //
 
 #import "FavoritesVC.h"
 #import "FavoritesInnerVC.h"
+#import "SettingMenuVC.h"
 @interface FavoritesVC ()
 
 @end
@@ -24,6 +25,7 @@
     self.navigationItem.title = @"收藏夹";
     cbBottom.leftBtn = [[UIButton alloc]init];
     [cbBottom.leftBtn setTitle:@"菜单" forState:UIControlStateNormal];
+    [cbBottom.leftBtn addTarget:self action:@selector(jumpToSetting) forControlEvents:UIControlEventTouchUpInside];
     cbBottom.leftBtn.titleLabel.font = [UIFont systemFontOfSize:30];
     [cbBottom.leftBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [cbBottom.view addSubview:cbBottom.leftBtn];
@@ -44,6 +46,10 @@
         make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 560));
     }];
     // Do any additional setup after loading the view.
+}
+
+-(void)jumpToSetting{
+    [self.navigationController pushViewController:[[SettingMenuVC alloc]init] animated:true];
 }
 
 -(void)jump: (id)sender{

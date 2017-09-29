@@ -16,6 +16,8 @@
 		016280511F7B95D500FB1577 /* APPlayerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 016280501F7B95D500FB1577 /* APPlayerUITests.m */; };
 		016280611F7B96CF00FB1577 /* FavoritesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 016280601F7B96CF00FB1577 /* FavoritesVC.m */; };
 		016280671F7B9CF000FB1577 /* ControllerBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 016280661F7B9CF000FB1577 /* ControllerBar.m */; };
+		01D139031F7E2D38000D45BD /* SettingMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D139021F7E2D38000D45BD /* SettingMenuVC.m */; };
+		01D139061F7E30C0000D45BD /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D139051F7E30C0000D45BD /* RootNavigationController.m */; };
 		01ED24B61F7C930F0017FFAA /* FavoritesInnerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 01ED24B51F7C930F0017FFAA /* FavoritesInnerVC.m */; };
 		01ED25011F7CE64D0017FFAA /* PlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 01ED25001F7CE64D0017FFAA /* PlayerVC.m */; };
 		2F157E1405D2DDDF1F1A23C7 /* libPods-APPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 034134887CFF1756C7BEB1E0 /* libPods-APPlayer.a */; };
@@ -58,6 +60,10 @@
 		016280601F7B96CF00FB1577 /* FavoritesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritesVC.m; sourceTree = "<group>"; };
 		016280651F7B9CF000FB1577 /* ControllerBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControllerBar.h; sourceTree = "<group>"; };
 		016280661F7B9CF000FB1577 /* ControllerBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControllerBar.m; sourceTree = "<group>"; };
+		01D139011F7E2D38000D45BD /* SettingMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingMenuVC.h; sourceTree = "<group>"; };
+		01D139021F7E2D38000D45BD /* SettingMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingMenuVC.m; sourceTree = "<group>"; };
+		01D139041F7E30C0000D45BD /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigationController.h; sourceTree = "<group>"; };
+		01D139051F7E30C0000D45BD /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigationController.m; sourceTree = "<group>"; };
 		01ED24B41F7C930F0017FFAA /* FavoritesInnerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesInnerVC.h; sourceTree = "<group>"; };
 		01ED24B51F7C930F0017FFAA /* FavoritesInnerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritesInnerVC.m; sourceTree = "<group>"; };
 		01ED24FF1F7CE64D0017FFAA /* PlayerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerVC.h; sourceTree = "<group>"; };
@@ -168,6 +174,10 @@
 				016280661F7B9CF000FB1577 /* ControllerBar.m */,
 				01429A481F7BA74300AAB54F /* MenuView.h */,
 				01429A491F7BA74300AAB54F /* MenuView.m */,
+				01D139011F7E2D38000D45BD /* SettingMenuVC.h */,
+				01D139021F7E2D38000D45BD /* SettingMenuVC.m */,
+				01D139041F7E30C0000D45BD /* RootNavigationController.h */,
+				01D139051F7E30C0000D45BD /* RootNavigationController.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -379,8 +389,10 @@
 				01ED24B61F7C930F0017FFAA /* FavoritesInnerVC.m in Sources */,
 				0162802D1F7B95D500FB1577 /* main.m in Sources */,
 				01ED25011F7CE64D0017FFAA /* PlayerVC.m in Sources */,
+				01D139061F7E30C0000D45BD /* RootNavigationController.m in Sources */,
 				016280611F7B96CF00FB1577 /* FavoritesVC.m in Sources */,
 				016280671F7B9CF000FB1577 /* ControllerBar.m in Sources */,
+				01D139031F7E2D38000D45BD /* SettingMenuVC.m in Sources */,
 				01429A4A1F7BA74300AAB54F /* MenuView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

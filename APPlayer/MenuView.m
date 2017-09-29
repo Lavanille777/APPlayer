@@ -1,7 +1,7 @@
 //
 //  MenuView.m
 //  APPlayer
-//
+//  选集旋转木马视图
 //  Created by lavanille on 2017/9/27.
 //  Copyright © 2017年 lavanille. All rights reserved.
 //
@@ -23,10 +23,7 @@
     iCarouselview.dataSource = self;
     iCarouselview.delegate = self;
     [self.view addSubview:iCarouselview];
-//    [iCarouselview mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(self.view.mas_centerY);
-//        make.centerX.equalTo(self.view.mas_centerX);
-//    }];
+
 }
 
 
