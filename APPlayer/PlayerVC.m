@@ -33,7 +33,7 @@
     
     
     self.player = [[AVPlayer alloc] init];
-    _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];    
+    _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
     
     [cbBottom.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
