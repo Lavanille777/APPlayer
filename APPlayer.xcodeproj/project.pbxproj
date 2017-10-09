@@ -16,7 +16,10 @@
 		016280511F7B95D500FB1577 /* APPlayerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 016280501F7B95D500FB1577 /* APPlayerUITests.m */; };
 		016280611F7B96CF00FB1577 /* FavoritesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 016280601F7B96CF00FB1577 /* FavoritesVC.m */; };
 		016280671F7B9CF000FB1577 /* ControllerBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 016280661F7B9CF000FB1577 /* ControllerBar.m */; };
-		019259AF1F7F6F9D00991875 /* SystemAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 019259AE1F7F6F9D00991875 /* SystemAlbum.m */; };
+		016E57A71F8B49CB0049A098 /* FavoritesManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 016E57A61F8B49CB0049A098 /* FavoritesManageVC.m */; };
+		016E57AB1F8B678F0049A098 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 016E57AA1F8B678F0049A098 /* Video.m */; };
+		016E57AE1F8B69890049A098 /* VideoList.m in Sources */ = {isa = PBXBuildFile; fileRef = 016E57AD1F8B69890049A098 /* VideoList.m */; };
+		016E57B11F8B6E490049A098 /* SQLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 016E57B01F8B6E490049A098 /* SQLManager.m */; };
 		01D139031F7E2D38000D45BD /* SettingMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D139021F7E2D38000D45BD /* SettingMenuVC.m */; };
 		01D139061F7E30C0000D45BD /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D139051F7E30C0000D45BD /* RootNavigationController.m */; };
 		01ED24B61F7C930F0017FFAA /* FavoritesInnerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 01ED24B51F7C930F0017FFAA /* FavoritesInnerVC.m */; };
@@ -61,8 +64,14 @@
 		016280601F7B96CF00FB1577 /* FavoritesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritesVC.m; sourceTree = "<group>"; };
 		016280651F7B9CF000FB1577 /* ControllerBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControllerBar.h; sourceTree = "<group>"; };
 		016280661F7B9CF000FB1577 /* ControllerBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControllerBar.m; sourceTree = "<group>"; };
-		019259AD1F7F6F9D00991875 /* SystemAlbum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemAlbum.h; sourceTree = "<group>"; };
-		019259AE1F7F6F9D00991875 /* SystemAlbum.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemAlbum.m; sourceTree = "<group>"; };
+		016E57A51F8B49CB0049A098 /* FavoritesManageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FavoritesManageVC.h; sourceTree = "<group>"; };
+		016E57A61F8B49CB0049A098 /* FavoritesManageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FavoritesManageVC.m; sourceTree = "<group>"; };
+		016E57A91F8B678F0049A098 /* Video.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
+		016E57AA1F8B678F0049A098 /* Video.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
+		016E57AC1F8B69890049A098 /* VideoList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoList.h; sourceTree = "<group>"; };
+		016E57AD1F8B69890049A098 /* VideoList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoList.m; sourceTree = "<group>"; };
+		016E57AF1F8B6E490049A098 /* SQLManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQLManager.h; sourceTree = "<group>"; };
+		016E57B01F8B6E490049A098 /* SQLManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SQLManager.m; sourceTree = "<group>"; };
 		01D139011F7E2D38000D45BD /* SettingMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingMenuVC.h; sourceTree = "<group>"; };
 		01D139021F7E2D38000D45BD /* SettingMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingMenuVC.m; sourceTree = "<group>"; };
 		01D139041F7E30C0000D45BD /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigationController.h; sourceTree = "<group>"; };
@@ -127,6 +136,7 @@
 		0162802A1F7B95D500FB1577 /* APPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				016E57A81F8B61FB0049A098 /* Model */,
 				0162805E1F7B967600FB1577 /* View */,
 				0162802E1F7B95D500FB1577 /* AppDelegate.h */,
 				0162802F1F7B95D500FB1577 /* AppDelegate.m */,
@@ -181,10 +191,23 @@
 				01D139021F7E2D38000D45BD /* SettingMenuVC.m */,
 				01D139041F7E30C0000D45BD /* RootNavigationController.h */,
 				01D139051F7E30C0000D45BD /* RootNavigationController.m */,
-				019259AD1F7F6F9D00991875 /* SystemAlbum.h */,
-				019259AE1F7F6F9D00991875 /* SystemAlbum.m */,
+				016E57A51F8B49CB0049A098 /* FavoritesManageVC.h */,
+				016E57A61F8B49CB0049A098 /* FavoritesManageVC.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		016E57A81F8B61FB0049A098 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				016E57A91F8B678F0049A098 /* Video.h */,
+				016E57AA1F8B678F0049A098 /* Video.m */,
+				016E57AC1F8B69890049A098 /* VideoList.h */,
+				016E57AD1F8B69890049A098 /* VideoList.m */,
+				016E57AF1F8B6E490049A098 /* SQLManager.h */,
+				016E57B01F8B6E490049A098 /* SQLManager.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		2F5540BB7E6DDC2E05890355 /* Frameworks */ = {
@@ -342,9 +365,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-APPlayer/Pods-APPlayer-resources.sh",
+				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -394,12 +420,15 @@
 				016280301F7B95D500FB1577 /* AppDelegate.m in Sources */,
 				01ED24B61F7C930F0017FFAA /* FavoritesInnerVC.m in Sources */,
 				0162802D1F7B95D500FB1577 /* main.m in Sources */,
-				019259AF1F7F6F9D00991875 /* SystemAlbum.m in Sources */,
 				01ED25011F7CE64D0017FFAA /* PlayerVC.m in Sources */,
 				01D139061F7E30C0000D45BD /* RootNavigationController.m in Sources */,
 				016280611F7B96CF00FB1577 /* FavoritesVC.m in Sources */,
+				016E57AE1F8B69890049A098 /* VideoList.m in Sources */,
 				016280671F7B9CF000FB1577 /* ControllerBar.m in Sources */,
 				01D139031F7E2D38000D45BD /* SettingMenuVC.m in Sources */,
+				016E57AB1F8B678F0049A098 /* Video.m in Sources */,
+				016E57A71F8B49CB0049A098 /* FavoritesManageVC.m in Sources */,
+				016E57B11F8B6E490049A098 /* SQLManager.m in Sources */,
 				01429A4A1F7BA74300AAB54F /* MenuView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

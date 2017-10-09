@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingMenuVC : UITableViewController
-
+@property (nonatomic) id target;
+@property (nonatomic, strong) NSArray *titles;
+@property (nonatomic) id parentTarget;
 @end

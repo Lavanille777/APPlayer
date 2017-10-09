@@ -31,6 +31,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>需要您的同意才能读取媒体资料库</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

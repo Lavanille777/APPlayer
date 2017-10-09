@@ -1,7 +1,7 @@
 //
 //  SettingMenuVC.m
 //  APPlayer
-//  设置主菜单
+//  设置主菜单（以pop的方式在主页弹出）
 //  Created by lavanille on 2017/9/29.
 //  Copyright © 2017年 lavanille. All rights reserved.
 //
@@ -9,9 +9,11 @@
 #import "SettingMenuVC.h"
 #import "SystemAlbum.h"
 #import "PlayerVC.h"
+#import "FavoritesManageVC.h"
+#import "TZImagePickerController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 @interface SettingMenuVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-@property (nonatomic, strong) NSArray *titles;
+
 @end
 
 @implementation SettingMenuVC
@@ -61,89 +63,66 @@
     NSInteger row = indexPath.row;
     if (row == 0) {
         
-        // 1.判断相册是否可以打开
-        if (![SystemAlbum isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) return;
-        // 2. 创建图片选择控制器
-        SystemAlbum *ipc = [[SystemAlbum alloc] init];
-        /**
-         typedef NS_ENUM(NSInteger, UIImagePickerControllerSourceType) {
-         UIImagePickerControllerSourceTypePhotoLibrary, // 相册
-         UIImagePickerControllerSourceTypeCamera, // 用相机拍摄获取
-         UIImagePickerControllerSourceTypeSavedPhotosAlbum // 相簿
-         }
-         */
-        // 3. 设置打开照片相册类型(显示所有相簿)
+        TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate: _target];
+        imagePickerVc.columnNumber = 6;
+        imagePickerVc.allowPickingMultipleVideo = YES;
+        // 你可以通过block或者代理，来得到用户选择的照片.
+        //        [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets) {
+        //
+        //        }];
+        [self presentViewController:imagePickerVc animated:YES completion:nil];
+    }
+    else if(row == 1){
+        PlayerVC *test = [[PlayerVC alloc]init];
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:test];
         
-        ipc.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        ipc.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie,(NSString *)kUTTypeVideo, nil];
-        [ipc setVideoQuality:UIImagePickerControllerQualityTypeHigh];
-        // ipc.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-        // 照相机
-        // ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
-        // 4.设置代理
-        ipc.delegate = self;
-        // 5.modal出这个控制器
-        
-        [self presentViewController:ipc animated:YES completion:nil];
+        [self presentViewController:nav animated:YES completion:nil];
     }
     
 }
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    //打印出字典中的内容
-    NSLog(@"get the media info: %@", info);
-    PlayerVC *pvc = [[PlayerVC alloc]init];
-    pvc.getURL = [info objectForKey:UIImagePickerControllerMediaURL];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [self.navigationController pushViewController:pvc animated:true];
-    
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

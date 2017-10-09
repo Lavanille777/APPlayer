@@ -56,6 +56,7 @@
     SettingMenuVC *smVC = [[SettingMenuVC alloc]init];
     smVC.preferredContentSize = CGSizeMake(300, 300);
     smVC.modalPresentationStyle = UIModalPresentationPopover;
+    smVC.target = self;
     //  弹出视图的代理
     smVC.popoverPresentationController.delegate = self;
     
@@ -67,7 +68,9 @@
 
     //  弹出视图的箭头方向
     smVC.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-
+    [self.navigationController setDefinesPresentationContext:YES];
+    [smVC setModalPresentationStyle:UIModalPresentationCurrentContext];
+    
     [self presentViewController:smVC animated:YES completion:nil];
     
 }
