@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ControllerBar.h"
 #import "MenuView.h"
-@interface FavoritesVC : UIViewController
+#import "SettingMenuVC.h"
+@interface FavoritesVC : UIViewController <UIPopoverPresentationControllerDelegate>
 @property (nonatomic,strong) MenuView *menu;
+@property (nonatomic,strong) ControllerBar *cbBottom;
 @end

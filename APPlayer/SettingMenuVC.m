@@ -7,8 +7,10 @@
 //
 
 #import "SettingMenuVC.h"
-
-@interface SettingMenuVC ()
+#import "SystemAlbum.h"
+#import "PlayerVC.h"
+#import <MobileCoreServices/MobileCoreServices.h>
+@interface SettingMenuVC () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (nonatomic, strong) NSArray *titles;
 @end
 
@@ -55,6 +57,50 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSInteger row = indexPath.row;
+    if (row == 0) {
+        
+        // 1.判断相册是否可以打开
+        if (![SystemAlbum isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) return;
+        // 2. 创建图片选择控制器
+        SystemAlbum *ipc = [[SystemAlbum alloc] init];
+        /**
+         typedef NS_ENUM(NSInteger, UIImagePickerControllerSourceType) {
+         UIImagePickerControllerSourceTypePhotoLibrary, // 相册
+         UIImagePickerControllerSourceTypeCamera, // 用相机拍摄获取
+         UIImagePickerControllerSourceTypeSavedPhotosAlbum // 相簿
+         }
+         */
+        // 3. 设置打开照片相册类型(显示所有相簿)
+        
+        ipc.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        ipc.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie,(NSString *)kUTTypeVideo, nil];
+        [ipc setVideoQuality:UIImagePickerControllerQualityTypeHigh];
+        // ipc.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        // 照相机
+        // ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
+        // 4.设置代理
+        ipc.delegate = self;
+        // 5.modal出这个控制器
+        
+        [self presentViewController:ipc animated:YES completion:nil];
+    }
+    
+}
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    //打印出字典中的内容
+    NSLog(@"get the media info: %@", info);
+    PlayerVC *pvc = [[PlayerVC alloc]init];
+    pvc.getURL = [info objectForKey:UIImagePickerControllerMediaURL];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController pushViewController:pvc animated:true];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 /*
 // Override to support conditional editing of the table view.

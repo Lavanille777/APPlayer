@@ -8,7 +8,7 @@
 
 #import "FavoritesVC.h"
 #import "FavoritesInnerVC.h"
-#import "SettingMenuVC.h"
+
 @interface FavoritesVC ()
 
 @end
@@ -17,25 +17,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    ControllerBar *cbBottom = [[ControllerBar alloc]init];
+    
+    _cbBottom = [[ControllerBar alloc]init];
     _menu = [[MenuView alloc]init];
     _menu.target = self;
-    [self.view addSubview:cbBottom.view];
+    
+    [self.view addSubview:_cbBottom.view];
     [self.view addSubview:_menu.view];
     self.navigationItem.title = @"收藏夹";
-    cbBottom.leftBtn = [[UIButton alloc]init];
-    [cbBottom.leftBtn setTitle:@"菜单" forState:UIControlStateNormal];
-    [cbBottom.leftBtn addTarget:self action:@selector(jumpToSetting) forControlEvents:UIControlEventTouchUpInside];
-    cbBottom.leftBtn.titleLabel.font = [UIFont systemFontOfSize:30];
-    [cbBottom.leftBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [cbBottom.view addSubview:cbBottom.leftBtn];
     
-    [cbBottom.leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(cbBottom.view.mas_centerY);
-        make.left.equalTo(cbBottom.view.mas_left).with.offset(20);
+    _cbBottom.leftBtn = [[UIButton alloc]init];
+    [_cbBottom.leftBtn setTitle:@"菜单" forState:UIControlStateNormal];
+    [_cbBottom.leftBtn addTarget:self action:@selector(jumpToSetting) forControlEvents:UIControlEventTouchUpInside];
+    _cbBottom.leftBtn.titleLabel.font = [UIFont systemFontOfSize:30];
+    [_cbBottom.leftBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_cbBottom.view addSubview:_cbBottom.leftBtn];
+    
+    [_cbBottom.leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_cbBottom.view.mas_centerY);
+        make.left.equalTo(_cbBottom.view.mas_left).with.offset(20);
     }];
     
-    [cbBottom.view mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_cbBottom.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
         make.left.equalTo(self.view.mas_left);
         make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 97));
@@ -45,11 +48,46 @@
         make.centerX.equalTo(self.view.mas_centerX);
         make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 560));
     }];
+    
     // Do any additional setup after loading the view.
 }
 
 -(void)jumpToSetting{
-    [self.navigationController pushViewController:[[SettingMenuVC alloc]init] animated:true];
+    SettingMenuVC *smVC = [[SettingMenuVC alloc]init];
+    smVC.preferredContentSize = CGSizeMake(300, 300);
+    smVC.modalPresentationStyle = UIModalPresentationPopover;
+    //  弹出视图的代理
+    smVC.popoverPresentationController.delegate = self;
+    
+    //  弹出视图的参照视图、从哪弹出
+    smVC.popoverPresentationController.sourceView = _cbBottom.leftBtn;
+
+    //  弹出视图的尖头位置：参照视图底边中间位置
+    smVC.popoverPresentationController.sourceRect = _cbBottom.leftBtn.bounds;
+
+    //  弹出视图的箭头方向
+    smVC.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+
+    [self presentViewController:smVC animated:YES completion:nil];
+    
+}
+
+- (BOOL) popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController{
+    
+    return YES;
+    
+}
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{
+    
+    return UIModalPresentationNone;
+    
+}
+
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController{
+    
+    NSLog(@"dismissed");
+    
 }
 
 -(void)jump: (id)sender{

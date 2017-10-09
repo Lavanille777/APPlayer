@@ -16,6 +16,7 @@
 		016280511F7B95D500FB1577 /* APPlayerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 016280501F7B95D500FB1577 /* APPlayerUITests.m */; };
 		016280611F7B96CF00FB1577 /* FavoritesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 016280601F7B96CF00FB1577 /* FavoritesVC.m */; };
 		016280671F7B9CF000FB1577 /* ControllerBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 016280661F7B9CF000FB1577 /* ControllerBar.m */; };
+		019259AF1F7F6F9D00991875 /* SystemAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 019259AE1F7F6F9D00991875 /* SystemAlbum.m */; };
 		01D139031F7E2D38000D45BD /* SettingMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D139021F7E2D38000D45BD /* SettingMenuVC.m */; };
 		01D139061F7E30C0000D45BD /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D139051F7E30C0000D45BD /* RootNavigationController.m */; };
 		01ED24B61F7C930F0017FFAA /* FavoritesInnerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 01ED24B51F7C930F0017FFAA /* FavoritesInnerVC.m */; };
@@ -60,6 +61,8 @@
 		016280601F7B96CF00FB1577 /* FavoritesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritesVC.m; sourceTree = "<group>"; };
 		016280651F7B9CF000FB1577 /* ControllerBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControllerBar.h; sourceTree = "<group>"; };
 		016280661F7B9CF000FB1577 /* ControllerBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControllerBar.m; sourceTree = "<group>"; };
+		019259AD1F7F6F9D00991875 /* SystemAlbum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemAlbum.h; sourceTree = "<group>"; };
+		019259AE1F7F6F9D00991875 /* SystemAlbum.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemAlbum.m; sourceTree = "<group>"; };
 		01D139011F7E2D38000D45BD /* SettingMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingMenuVC.h; sourceTree = "<group>"; };
 		01D139021F7E2D38000D45BD /* SettingMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingMenuVC.m; sourceTree = "<group>"; };
 		01D139041F7E30C0000D45BD /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigationController.h; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 				01D139021F7E2D38000D45BD /* SettingMenuVC.m */,
 				01D139041F7E30C0000D45BD /* RootNavigationController.h */,
 				01D139051F7E30C0000D45BD /* RootNavigationController.m */,
+				019259AD1F7F6F9D00991875 /* SystemAlbum.h */,
+				019259AE1F7F6F9D00991875 /* SystemAlbum.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 				TargetAttributes = {
 					016280271F7B95D500FB1577 = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 9RDTB937LX;
 						ProvisioningStyle = Automatic;
 					};
 					016280401F7B95D500FB1577 = {
@@ -388,6 +394,7 @@
 				016280301F7B95D500FB1577 /* AppDelegate.m in Sources */,
 				01ED24B61F7C930F0017FFAA /* FavoritesInnerVC.m in Sources */,
 				0162802D1F7B95D500FB1577 /* main.m in Sources */,
+				019259AF1F7F6F9D00991875 /* SystemAlbum.m in Sources */,
 				01ED25011F7CE64D0017FFAA /* PlayerVC.m in Sources */,
 				01D139061F7E30C0000D45BD /* RootNavigationController.m in Sources */,
 				016280611F7B96CF00FB1577 /* FavoritesVC.m in Sources */,
@@ -481,7 +488,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -523,7 +530,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -535,8 +542,9 @@
 			baseConfigurationReference = 30B0572B94E43033ED098BC6 /* Pods-APPlayer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9RDTB937LX;
 				INFOPLIST_FILE = APPlayer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ajmide.APPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -549,8 +557,9 @@
 			baseConfigurationReference = 99FFE331020DC053547756F1 /* Pods-APPlayer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9RDTB937LX;
 				INFOPLIST_FILE = APPlayer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ajmide.APPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";

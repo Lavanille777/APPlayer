@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    iCarousel *iCarouselview = [[iCarousel alloc] initWithFrame:CGRectMake(0,-100,self.view.frame.size.width,self.view.frame.size.height)];
+    iCarousel *iCarouselview = [[iCarousel alloc] initWithFrame:CGRectMake(0,-150,self.view.frame.size.width,self.view.frame.size.height)];
     //设置显示效果类型
     iCarouselview.type = iCarouselTypeCoverFlow;
     //设置代理
@@ -87,7 +87,7 @@
         case iCarouselOptionSpacing:
         {
             //设置没个界面直接的间隙，默认为0.25
-            return value * 3.0f;
+            return value * 2.5f;
         }
         default:
         {

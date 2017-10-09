@@ -9,7 +9,6 @@
 #import "PlayerVC.h"
 
 @interface PlayerVC ()
-
 @end
 
 @implementation PlayerVC
@@ -24,12 +23,7 @@
 
 - (UIView* )PlayerView{
     UIView *PlayerView = [[UIView alloc]init];
-    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"ScreenFlow.mp4"];
-
-    NSLog(@"%@",filePath);
-    NSURL *url = [NSURL fileURLWithPath:filePath];
-    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:url];
+    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:_getURL];
     _player = [self player: item];
     CMTime duration = item.duration;// 获取视频总长度
     NSLog(@"lalala%f",CMTimeGetSeconds(duration));

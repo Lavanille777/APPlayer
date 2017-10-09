@@ -17,4 +17,5 @@
 @property (nonatomic ,strong) AVPlayerItem *playerItem;
 @property (nonatomic ,strong) ControllerBar *cbBottom;
 @property (nonatomic) BOOL playOrPauseFlag;
+@property (nonatomic ,strong) NSURL *getURL;
 @end

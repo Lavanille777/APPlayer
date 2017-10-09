@@ -1,7 +1,7 @@
 //
 //  RootNavigationController.m
 //  APPlayer
-//
+//  导航栏根视图 主要作用是强制横屏
 //  Created by lavanille on 2017/9/29.
 //  Copyright © 2017年 lavanille. All rights reserved.
 //
@@ -28,17 +28,7 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     
-    // 获取topCtl
-    UIViewController  *ctl = self.topViewController;
-    // 进行后续区分
-    if([ctl isKindOfClass:[UIViewController class]]){
-        
-        return UIInterfaceOrientationMaskLandscape;
-    }
-    else {
-        
-        return UIInterfaceOrientationMaskAll;
-    }
+    return UIInterfaceOrientationMaskLandscape;
 }
 
 - (BOOL)shouldAutorotate
@@ -48,14 +38,12 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    // 获取topCtl
-    UIViewController  *ctl = viewController;
+    
     // 在进入之前强制旋转设备
-    if([ctl isKindOfClass:[UIViewController class]]){
-        
-        [self interfaceOrientation:UIInterfaceOrientationLandscapeRight];
-    }
+    
+    [self interfaceOrientation:UIInterfaceOrientationLandscapeRight];
     [super pushViewController:viewController animated:animated];
+    
 }
 
 
