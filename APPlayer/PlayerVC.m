@@ -25,8 +25,6 @@
     UIView *PlayerView = [[UIView alloc]init];
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:_getURL];
     _player = [self player: item];
-    CMTime duration = item.duration;// 获取视频总长度
-    NSLog(@"lalala%f",CMTimeGetSeconds(duration));
     _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
     _playerLayer.frame = CGRectMake(0, 80, [UIScreen mainScreen].bounds.size.width, 570);
     _playerLayer.backgroundColor = [UIColor blackColor].CGColor;

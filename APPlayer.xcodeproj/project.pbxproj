@@ -20,6 +20,7 @@
 		016E57AB1F8B678F0049A098 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 016E57AA1F8B678F0049A098 /* Video.m */; };
 		016E57AE1F8B69890049A098 /* VideoList.m in Sources */ = {isa = PBXBuildFile; fileRef = 016E57AD1F8B69890049A098 /* VideoList.m */; };
 		016E57B11F8B6E490049A098 /* SQLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 016E57B01F8B6E490049A098 /* SQLManager.m */; };
+		01B14DE91F8C6E0B002BA591 /* FavoriteInnerManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B14DE81F8C6E0B002BA591 /* FavoriteInnerManageVC.m */; };
 		01D139031F7E2D38000D45BD /* SettingMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D139021F7E2D38000D45BD /* SettingMenuVC.m */; };
 		01D139061F7E30C0000D45BD /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D139051F7E30C0000D45BD /* RootNavigationController.m */; };
 		01ED24B61F7C930F0017FFAA /* FavoritesInnerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 01ED24B51F7C930F0017FFAA /* FavoritesInnerVC.m */; };
@@ -72,6 +73,8 @@
 		016E57AD1F8B69890049A098 /* VideoList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoList.m; sourceTree = "<group>"; };
 		016E57AF1F8B6E490049A098 /* SQLManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQLManager.h; sourceTree = "<group>"; };
 		016E57B01F8B6E490049A098 /* SQLManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SQLManager.m; sourceTree = "<group>"; };
+		01B14DE71F8C6E0B002BA591 /* FavoriteInnerManageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FavoriteInnerManageVC.h; sourceTree = "<group>"; };
+		01B14DE81F8C6E0B002BA591 /* FavoriteInnerManageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FavoriteInnerManageVC.m; sourceTree = "<group>"; };
 		01D139011F7E2D38000D45BD /* SettingMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingMenuVC.h; sourceTree = "<group>"; };
 		01D139021F7E2D38000D45BD /* SettingMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingMenuVC.m; sourceTree = "<group>"; };
 		01D139041F7E30C0000D45BD /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigationController.h; sourceTree = "<group>"; };
@@ -193,6 +196,8 @@
 				01D139051F7E30C0000D45BD /* RootNavigationController.m */,
 				016E57A51F8B49CB0049A098 /* FavoritesManageVC.h */,
 				016E57A61F8B49CB0049A098 /* FavoritesManageVC.m */,
+				01B14DE71F8C6E0B002BA591 /* FavoriteInnerManageVC.h */,
+				01B14DE81F8C6E0B002BA591 /* FavoriteInnerManageVC.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -419,6 +424,7 @@
 			files = (
 				016280301F7B95D500FB1577 /* AppDelegate.m in Sources */,
 				01ED24B61F7C930F0017FFAA /* FavoritesInnerVC.m in Sources */,
+				01B14DE91F8C6E0B002BA591 /* FavoriteInnerManageVC.m in Sources */,
 				0162802D1F7B95D500FB1577 /* main.m in Sources */,
 				01ED25011F7CE64D0017FFAA /* PlayerVC.m in Sources */,
 				01D139061F7E30C0000D45BD /* RootNavigationController.m in Sources */,
