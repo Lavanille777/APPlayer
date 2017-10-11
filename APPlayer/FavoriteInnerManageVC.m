@@ -23,6 +23,7 @@
     //从数据库中取得数组
     _sqlManager = [SQLManager initSqlManager];
     _favoriteList = [_sqlManager queryVideoByListName:_listName];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -80,7 +81,7 @@
                 NSLog(@"不是");
             }
         }
-        [_sqlManager updateVideoToFavoriteList:_listName :videoList :NO];
+        [_sqlManager addVideoToVideoList:_listName :videoList];
     }];
     [imagePickerVc setDidFinishPickingVideoHandle:^(UIImage *coverImage, id asset) {
         
@@ -96,6 +97,25 @@
 
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewRowAction *action0 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        NSLog(@"点击了删除");
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath: indexPath];
+        [_sqlManager removeVideoFromFavoriteList:_listName :(NSString *)cell.textLabel.text];
+        [self.tableView reloadData];
+        // 收回左滑出现的按钮(退出编辑模式)
+        tableView.editing = NO;
+    }];
+    return @[action0];
+}
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [self.tableView reloadData];
