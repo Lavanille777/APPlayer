@@ -16,14 +16,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    iCarousel *iCarouselview = [[iCarousel alloc] initWithFrame:CGRectMake(0,-150,self.view.frame.size.width,self.view.frame.size.height)];
+    _sqlManager = [SQLManager initSqlManager];
+    _iCarouselview = [[iCarousel alloc] initWithFrame:CGRectMake(0,-150,self.view.frame.size.width,self.view.frame.size.height)];
     //设置显示效果类型
-    iCarouselview.type = iCarouselTypeCoverFlow;
+    _iCarouselview.type = iCarouselTypeCoverFlow;
     //设置代理
-    iCarouselview.dataSource = self;
-    iCarouselview.delegate = self;
-    [self.view addSubview:iCarouselview];
+    _iCarouselview.dataSource = self;
+    _iCarouselview.delegate = self;
+    [self.view addSubview:_iCarouselview];
+    
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    [_iCarouselview reloadData];
+    [self.view layoutIfNeeded];
 }
 
 
@@ -34,20 +40,45 @@
 
 #pragma mark iCarouselDataSource
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
-    return 10;
+    return [_nameList count];
 }
 
 - (void)tempJump{
-      [_target performSelector:@selector(jump:) withObject:_str];
+    if (_curVideo!=nil&&_curVideo.asset!=nil) {
+        if (_url != nil) {
+            [_target performSelector:@selector(jump:) withObject:_url];
+        }
+    }
+    else{
+        [_target performSelector:@selector(jump:) withObject:_str];
+    }
+    
+    
+}
+- (void)carouselDidScroll:(iCarousel *)carousel {
+    _tapGesture.enabled = NO;
 }
 
 - (void)carouselDidEndScrollingAnimation:(iCarousel *) carousel{
     UIView *view = carousel.currentItemView;
-    _str = carousel.name;
+    _str = [_nameList objectAtIndex:carousel.currentItemIndex];
     view.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tempJump)];
-    [view addGestureRecognizer:tapGesture];
-    [tapGesture setNumberOfTapsRequired:1];
+    _curVideo = [_sqlManager queryVideoFromVideoTable:_str];
+    if (_curVideo!=nil&&_curVideo.asset!=nil){
+        PHImageManager *manager = [PHImageManager defaultManager];
+        PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
+        options.version = PHImageRequestOptionsVersionCurrent;
+        options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
+        PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[_curVideo.asset] options:nil];
+        PHAsset *asset = [assets firstObject];
+        [manager requestAVAssetForVideo:asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+            AVURLAsset *urlAsset = (AVURLAsset *)asset;
+            _url = urlAsset.URL;
+        }];
+    }
+    _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tempJump)];
+    [view addGestureRecognizer:_tapGesture];
+    [_tapGesture setNumberOfTapsRequired:1];
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
@@ -55,7 +86,22 @@
     if (view == nil)
     {
         view =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 450.0f, 450.0f)] ;
-        view.backgroundColor = [UIColor blueColor];
+        Video *video = [_sqlManager queryVideoFromVideoTable:[_nameList objectAtIndex:index]];
+        
+        PHImageManager *manager = [PHImageManager defaultManager];
+        PHImageRequestOptions*options = [[PHImageRequestOptions alloc]init];
+        
+        options.deliveryMode=PHImageRequestOptionsDeliveryModeFastFormat;
+        
+        if (video.asset!=nil) {
+            PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[video.asset] options:nil];
+            PHAsset *asset = [assets firstObject];
+            [manager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:options resultHandler:^(UIImage *resultImage, NSDictionary *info)
+             {
+                 ((UIImageView *)view).image = resultImage;
+             }];
+        }
+        
         _label = [[UILabel alloc] initWithFrame:view.bounds];
         _label.backgroundColor = [UIColor clearColor];
         _label.textAlignment = NSTextAlignmentCenter;
@@ -68,8 +114,8 @@
     {
         _label = (UILabel *)[view viewWithTag:1];
     }
-    carousel.name = [NSString stringWithFormat:@"第%ld集",carousel.currentItemIndex];
-    _label.text = [NSString stringWithFormat:@"%ld",(long)index];
+    carousel.name = [_nameList objectAtIndex:index];
+    _label.text = [_nameList objectAtIndex:index];
     return view;
 }
 
@@ -95,14 +141,15 @@
         }
     }
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

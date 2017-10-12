@@ -10,5 +10,5 @@
 
 @interface Video : NSObject
 @property (nonatomic, strong) NSString *name;    //视频名称
-@property (nonatomic, strong) id asset;        //视频本地路径
+@property (nonatomic, strong) NSString *asset;   //视频本地路径
 @end

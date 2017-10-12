@@ -12,7 +12,11 @@
 @end
 
 @implementation PlayerVC
-
+- (void)viewWillAppear:(BOOL)animated {
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    
+}
 - (AVPlayer *)player:(AVPlayerItem*)item {
     if (_player == nil) {
         _player = [[AVPlayer alloc] initWithPlayerItem:item];

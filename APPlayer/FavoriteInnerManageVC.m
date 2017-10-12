@@ -16,19 +16,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(addVideo)];
     
     //从数据库中取得数组
     _sqlManager = [SQLManager initSqlManager];
     _favoriteList = [_sqlManager queryVideoByListName:_listName];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,7 +67,7 @@
             if ([asset isKindOfClass:[PHAsset class]]){
                 Video *video = [[Video alloc]init];
                 video.name = [asset valueForKey:@"filename"];
-                video.asset = asset;
+                video.asset = [asset valueForKey:@"localIdentifier"];
                 [videoList addObject:video];
             }
             else{
@@ -82,19 +75,8 @@
             }
         }
         [_sqlManager addVideoToVideoList:_listName :videoList];
+        [self viewWillAppear:true];
     }];
-    [imagePickerVc setDidFinishPickingVideoHandle:^(UIImage *coverImage, id asset) {
-        
-            if ([asset isKindOfClass:[PHAsset class]]){
-                NSLog(@"asset isKindOfClass:[PHAsset class]");
-            }
-            else{
-                NSLog(@"不是");
-            }
-        
-                
-    }];
-
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
@@ -109,7 +91,7 @@
         NSLog(@"点击了删除");
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath: indexPath];
         [_sqlManager removeVideoFromFavoriteList:_listName :(NSString *)cell.textLabel.text];
-        [self.tableView reloadData];
+        [self viewWillAppear:true];
         // 收回左滑出现的按钮(退出编辑模式)
         tableView.editing = NO;
     }];
@@ -118,8 +100,8 @@
 
 
 - (void)viewWillAppear:(BOOL)animated{
+    _favoriteList = [_sqlManager queryVideoByListName:_listName];
     [self.tableView reloadData];
-    [self.view layoutIfNeeded];
 }
 /*
  // Override to support conditional editing of the table view.

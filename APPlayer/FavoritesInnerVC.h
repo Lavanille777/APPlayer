@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "ControllerBar.h"
 #import "MenuView.h"
+#import "SQLManager.h"
 @interface FavoritesInnerVC : UIViewController
 @property (nonatomic,strong) NSString* ListName;
 @property (nonatomic,strong) MenuView *menu;
+@property (nonatomic, strong) SQLManager *sqlManager;
 @end

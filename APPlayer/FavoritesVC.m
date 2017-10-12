@@ -14,14 +14,20 @@
 @end
 
 @implementation FavoritesVC
+- (void)viewWillAppear:(BOOL)animated {
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.menu.nameList = [_sqlManager queryFavoriteList];
+    [self.menu.iCarouselview reloadData];
+    [self.view layoutIfNeeded];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _sqlManager = [SQLManager initSqlManager];
     _cbBottom = [[ControllerBar alloc]init];
     _menu = [[MenuView alloc]init];
     _menu.target = self;
-    
+    _menu.nameList = [_sqlManager queryFavoriteList];
     [self.view addSubview:_cbBottom.view];
     [self.view addSubview:_menu.view];
     self.navigationItem.title = @"收藏夹";
@@ -103,6 +109,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 /*
 #pragma mark - Navigation

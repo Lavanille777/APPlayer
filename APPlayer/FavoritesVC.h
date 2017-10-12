@@ -10,7 +10,10 @@
 #import "ControllerBar.h"
 #import "MenuView.h"
 #import "SettingMenuVC.h"
+#import "SQLManager.h"
 @interface FavoritesVC : UIViewController <UIPopoverPresentationControllerDelegate>
 @property (nonatomic,strong) MenuView *menu;
 @property (nonatomic,strong) ControllerBar *cbBottom;
+@property (nonatomic, strong) SQLManager *sqlManager;
+@property (nonatomic, strong) NSMutableArray *favoriteList;
 @end

@@ -20,11 +20,7 @@
     //从数据库获取列表
     _sqlManager = [SQLManager initSqlManager];
     _favoriteList = [_sqlManager queryFavoriteList];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+ 
 }
 
 - (void)addFavorite {
@@ -59,7 +55,7 @@
             if ([asset isKindOfClass:[PHAsset class]]){
                 Video *video = [[Video alloc]init];
                 video.name = [asset valueForKey:@"filename"];
-                video.asset = asset;
+                video.asset = [asset valueForKey:@"localIdentifier"];
                 [videoList addObject:video];
             }
             else{
@@ -67,6 +63,7 @@
             }
         }
         [_sqlManager addVideoToVideoList:listName :videoList];
+        [self viewWillAppear:true];
     }];
     [self presentViewController:imagePickerVc animated:YES completion:nil];
     
@@ -88,9 +85,9 @@
         NSLog(@"点击了删除");
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath: indexPath];
         [_sqlManager deleteFavoriteList:cell.textLabel.text];
-        [self.tableView reloadData];
         // 收回左滑出现的按钮(退出编辑模式)
         tableView.editing = NO;
+        [self viewWillAppear:true];
     }];
     return @[action0];
 }
@@ -126,6 +123,14 @@
     vil.listName = cell.textLabel.text;
     [self.navigationController pushViewController:vil animated:true];
 }
+
+- (void)viewWillAppear:(BOOL)animated{
+    _favoriteList = [_sqlManager queryFavoriteList];
+    [self viewDidLoad];
+    [self.tableView reloadData];
+}
+
+
 /*
  // Override to support conditional editing of the table view.
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -12,12 +12,18 @@
 @end
 
 @implementation FavoritesInnerVC
-
+- (void)viewWillAppear:(BOOL)animated {
+    self.view.backgroundColor = [UIColor whiteColor];
+    _menu.nameList = [_sqlManager queryVideoByListName:_ListName];
+    [self.view layoutIfNeeded];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = _ListName;
+    _sqlManager = [SQLManager initSqlManager];
     _menu = [[MenuView alloc]init];
     _menu.target = self;
+    _menu.nameList = [_sqlManager queryVideoByListName:_ListName];
     [self.view addSubview:_menu.view];
     ControllerBar *cbBottom = [[ControllerBar alloc]init];
     [self.view addSubview:cbBottom.view];
@@ -42,8 +48,10 @@
 
 -(void)jump: (id)sender{
     PlayerVC *PVC = [[PlayerVC alloc]init];
+    PVC.getURL = sender;
     [self.navigationController pushViewController:PVC animated:true];
 }
+
 
 /*
 #pragma mark - Navigation

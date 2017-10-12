@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _titles = [[NSArray alloc]initWithObjects:@"所有视频",@"收藏夹管理",@"其他设置",nil];
+    _titles = [[NSArray alloc]initWithObjects:@"收藏夹管理",@"其他设置",nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -41,7 +41,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return [_titles count];
 }
 
@@ -60,18 +59,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = indexPath.row;
-    if (row == 0) {
-        
-        TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate: _target];
-        imagePickerVc.columnNumber = 6;
-        imagePickerVc.allowPickingMultipleVideo = YES;
-        // 你可以通过block或者代理，来得到用户选择的照片.
-        //        [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets) {
-        //
-        //        }];
-        [self presentViewController:imagePickerVc animated:YES completion:nil];
-    }
-    else if(row == 1){
+    if(row == 0){
         [self dismissViewControllerAnimated:true completion:nil];
         if ([self.presentingViewController isKindOfClass:[UINavigationController class]]) {
             UINavigationController *nav = (UINavigationController*)self.presentingViewController;
