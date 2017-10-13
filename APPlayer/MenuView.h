@@ -13,14 +13,14 @@
 #import <TZImagePickerController.h>
 #import <Photos/Photos.h>
 @interface MenuView : UIViewController
-@property (nonatomic) id target;
-@property (nonatomic,strong) UILabel *label;
-@property (nonatomic,strong) NSString *str;
-@property (nonatomic, strong) Video *curVideo;
-@property (nonatomic, strong) NSURL *url;
-@property (nonatomic, strong) NSMutableArray *nameList;
-@property (nonatomic, strong) iCarousel *iCarouselview;
-@property (nonatomic, strong) NSMutableArray *assetArray;
+@property (nonatomic) id target;                                        //将事件交给其他类处理
+@property (nonatomic,strong) UILabel *label;                            //封面标题
+@property (nonatomic,strong) NSString *str;                             //将标题交给收藏夹内页
+@property (nonatomic, strong) Video *curVideo;                          //目前选中的视频
+@property (nonatomic, strong) NSURL *url;                               //将视频地址交给播放器页
+@property (nonatomic, strong) NSMutableArray *nameList;                 //旋转木马显示的名称列表
+@property (nonatomic, strong) iCarousel *iCarouselview;                 //旋转木马视图
+@property (nonatomic, strong) NSMutableArray *assetArray;              
 @property (nonatomic, strong) SQLManager *sqlManager;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @end

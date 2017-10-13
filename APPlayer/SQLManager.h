@@ -1,7 +1,7 @@
 //
 //  SQLManager.h
 //  APPlayer
-//
+//  数据库访问层
 //  Created by lavanille on 2017/10/9.
 //  Copyright © 2017年 lavanille. All rights reserved.
 //

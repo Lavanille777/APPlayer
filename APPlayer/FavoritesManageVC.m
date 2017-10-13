@@ -20,7 +20,7 @@
     //从数据库获取列表
     _sqlManager = [SQLManager initSqlManager];
     _favoriteList = [_sqlManager queryFavoriteList];
- 
+    
 }
 
 - (void)addFavorite {
@@ -31,16 +31,28 @@
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //获取输入框
         UITextField *TextField = alertController.textFields.firstObject;
-        [self addVideos: TextField.text];
-        [_sqlManager addFavoriteList:TextField.text :nil];
+        if([TextField.text containsString:@" "])
+        {
+            NSLog(@"不允许包含空格");
+            UIAlertController *alertController1 = [UIAlertController alertControllerWithTitle:@"错误" message:@"不允许包含空格" preferredStyle:UIAlertControllerStyleAlert];
+            [alertController1 addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }]];
+            [self presentViewController:alertController1 animated:YES completion:nil];
+        }
+        else{
+            [self addVideos: TextField.text];
+            [_sqlManager addFavoriteList:TextField.text :nil];
+        }
+        
     }]];
-    
     //增加取消按钮
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = @"名称";
     }];
     [self presentViewController:alertController animated:YES completion:nil];
+    
     
 }
 
@@ -49,7 +61,7 @@
     NSMutableArray *videoList = [[NSMutableArray alloc]init];
     imagePickerVc.columnNumber = 6;
     imagePickerVc.allowPickingMultipleVideo = YES;
-    // 你可以通过block或者代理，来得到用户选择的照片.
+    // 得到用户选择的照片.
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         for (id asset in assets) {
             if ([asset isKindOfClass:[PHAsset class]]){
@@ -109,10 +121,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier];
-        [[cell textLabel]  setText:[_favoriteList objectAtIndex:indexPath.row]];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
-    // Configure the cell...
+    if (_favoriteList != nil) {
+        [[cell textLabel]  setText:[_favoriteList objectAtIndex:indexPath.row]];
+    }
     return cell;
 }
 
@@ -126,53 +139,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     _favoriteList = [_sqlManager queryFavoriteList];
-    [self viewDidLoad];
     [self.tableView reloadData];
 }
-
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
