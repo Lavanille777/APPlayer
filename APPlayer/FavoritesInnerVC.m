@@ -52,12 +52,12 @@
     [super didReceiveMemoryWarning];
 }
 #pragma mark - 跳转至播放页方法
--(void)jump: (id)sender{
+-(void)jump: (id)sender :(id)sender2{
     PlayerVC *PVC = [[PlayerVC alloc]init];
-    PVC.getURL = sender;
+    PVC.nameList = sender;
+    PVC.curName = sender2;
     [self.navigationController pushViewController:PVC animated:true];
 }
-
 
 /*
 #pragma mark - Navigation

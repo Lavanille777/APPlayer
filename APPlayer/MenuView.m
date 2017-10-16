@@ -46,7 +46,7 @@
 - (void)tempJump{
     if (_curVideo!=nil&&_curVideo.asset!=nil) {
         if (_url != nil) {
-            [_target performSelector:@selector(jump:) withObject:_url];
+            [_target performSelector:@selector(jump::) withObject:_nameList withObject:_curVideo.name];
         }
     }
     else{

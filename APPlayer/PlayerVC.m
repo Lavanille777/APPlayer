@@ -14,7 +14,6 @@
 @implementation PlayerVC
 - (void)viewWillAppear:(BOOL)animated {
     //页面即将显示时视频为暂停(或停止)状态
-    _playOrPauseFlag = YES;
     self.view.backgroundColor = [UIColor whiteColor];
 }
 #pragma mark - 播放器初始化
@@ -27,20 +26,25 @@
 }
 #pragma mark - 播放器视图初始化
 - (UIView* )PlayerView{
-    UIView *PlayerView = [[UIView alloc]init];
-    //获取视频本地URL
-    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:_getURL];
-    _player = [self player: item];
-    _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-    //播放器视图布局
-    _playerLayer.frame = CGRectMake(0, 80, [UIScreen mainScreen].bounds.size.width, 570);
-    _playerLayer.backgroundColor = [UIColor blackColor].CGColor;
-    [PlayerView.layer addSublayer:_playerLayer];
-    return PlayerView;
+    _PlayerView = [[UIView alloc]init];
+    [self getURLWithResultHandler:^{
+         //获取视频本地URL
+        _playerItem = [[AVPlayerItem alloc] initWithURL:_playURL];
+        _player = [self player: _playerItem];
+        _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+        //播放器视图布局
+        _playerLayer.frame = CGRectMake(0, 60, [UIScreen mainScreen].bounds.size.width, 680);
+        _playerLayer.backgroundColor = [UIColor blackColor].CGColor;
+        [_PlayerView.layer addSublayer:_playerLayer];
+    }];
+   
+    return _PlayerView;
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    _playOrPauseFlag = YES;
     //底部控制条、上一集按钮、下一集按钮
     _cbBottom = [[ControllerBar alloc]init];
     _cbBottom.leftBtn = [[UIButton alloc]init];
@@ -53,13 +57,15 @@
     _cbBottom.centerBtn.titleLabel.font = [UIFont systemFontOfSize:30];
     _cbBottom.rightBth.titleLabel.font = [UIFont systemFontOfSize:30];
     [_cbBottom.centerBtn addTarget:self action:@selector(playOrPause) forControlEvents:UIControlEventTouchUpInside];
+    [_cbBottom.leftBtn addTarget:self action:@selector(lastEpisode) forControlEvents:UIControlEventTouchUpInside];
+    [_cbBottom.rightBth addTarget:self action:@selector(nextEpisode) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_cbBottom.view];
     [self.view addSubview:_cbBottom.leftBtn];
     [self.view addSubview:_cbBottom.centerBtn];
     [self.view addSubview:_cbBottom.rightBth];
     
-    UIView *playerView = [self PlayerView];
-    [self.view addSubview:playerView];
+    UIView *_PlayerView = [self PlayerView];
+    [self.view addSubview:_PlayerView];
     //布局开始
     //底部控制条布局
     [_cbBottom.view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -84,10 +90,60 @@
     }];
     //布局结束
 }
+#pragma mark - 根据名称获取地址
+- (void)getURLWithResultHandler:(void (^)())resultHandler{
+    SQLManager *sqlManager = [SQLManager initSqlManager];
+    Video *curVideo = [sqlManager queryVideoFromVideoTable:_curName];
+    if (curVideo!=nil&&curVideo.asset!=nil){
+        PHImageManager *manager = [PHImageManager defaultManager];
+        PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
+        options.version = PHImageRequestOptionsVersionCurrent;
+        options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
+        PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[curVideo.asset] options:nil];
+        PHAsset *asset = [assets firstObject];
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+        [manager requestAVAssetForVideo:asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+            AVURLAsset *urlAsset = (AVURLAsset *)asset;
+            _playURL = urlAsset.URL;
+            dispatch_queue_t mainQueue = dispatch_get_main_queue();
+            dispatch_sync(mainQueue,^{
+                
+                resultHandler();
+            });
+            
+        }];
+        
+    }
+}
+#pragma mark - 跳到上一集
+- (void)lastEpisode {
+    if ([_nameList indexOfObject:_curName]!=0) {
+        _curName = [_nameList objectAtIndex:[_nameList indexOfObject:_curName]-1];
+    }
+    else{
+        _curName = [_nameList objectAtIndex:[_nameList count]-1];
+    }
+    [self refreshPlayer];
+}
+#pragma mark - 跳到下一集
+- (void)nextEpisode {
+    if ([_nameList indexOfObject:_curName]!=[_nameList count]-1) {
+        _curName = [_nameList objectAtIndex:[_nameList indexOfObject:_curName]+1];
+    }
+    else{
+        _curName = [_nameList objectAtIndex:0];
+    }
+    [self refreshPlayer];
+}
+#pragma mark - 播放器刷新
+- (void)refreshPlayer {
+    _playOrPauseFlag = NO;
+    [self playOrPause];
+    [self getURLWithResultHandler:^{
+        _playerItem = [[AVPlayerItem alloc] initWithURL:_playURL];
+        [_player replaceCurrentItemWithPlayerItem:_playerItem];
+        [self.view layoutIfNeeded];
+    }];
 }
 #pragma mark - 播放或暂停方法
 -(void)playOrPause{
@@ -104,4 +160,9 @@
     }
 }
 
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+}
 @end
