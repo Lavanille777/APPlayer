@@ -25,6 +25,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //背景以及模糊
+    UIImageView *imageView=[[UIImageView alloc]initWithFrame:self.view.bounds];
+    imageView.image=[UIImage imageNamed:@"backgroud"];
+    [self.view insertSubview:imageView atIndex:0];
+    UIVisualEffectView *visualEfView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+    visualEfView.alpha = 0.9;
+    visualEfView.frame =self.view.bounds;
+    [imageView addSubview:visualEfView];
     
     self.navigationItem.title = @"收藏夹";
     _sqlManager = [SQLManager initSqlManager];
@@ -35,7 +43,7 @@
     [_cbBottom.leftBtn setTitle:@"菜单" forState:UIControlStateNormal];
     [_cbBottom.leftBtn addTarget:self action:@selector(jumpToSetting) forControlEvents:UIControlEventTouchUpInside];
     _cbBottom.leftBtn.titleLabel.font = [UIFont systemFontOfSize:30];
-    [_cbBottom.leftBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_cbBottom.leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_cbBottom.view addSubview:_cbBottom.leftBtn];
     //旋转木马菜单
     _menu = [[MenuView alloc]init];

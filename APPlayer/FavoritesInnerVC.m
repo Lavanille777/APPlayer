@@ -22,6 +22,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //背景以及模糊
+    UIImageView *imageView=[[UIImageView alloc]initWithFrame:self.view.bounds];
+    imageView.image=[UIImage imageNamed:@"backgroud"];
+    [self.view insertSubview:imageView atIndex:0];
+    UIVisualEffectView *visualEfView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+    visualEfView.alpha = 0.9;
+    visualEfView.frame =self.view.bounds;
+    [imageView addSubview:visualEfView];
+    
     self.navigationItem.title = _ListName;
     _sqlManager = [SQLManager initSqlManager];
     //旋转木马菜单

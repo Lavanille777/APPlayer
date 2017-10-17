@@ -17,7 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //控制条背景色
-    self.view.backgroundColor = [UIColor brownColor];
+    self.view.backgroundColor = [UIColor blackColor];
+    [self.view setAlpha:0.5];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -46,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		010296061F95A8A900C91A17 /* backgroud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroud.png; sourceTree = "<group>"; };
 		01429A481F7BA74300AAB54F /* MenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuView.h; sourceTree = "<group>"; };
 		01429A491F7BA74300AAB54F /* MenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuView.m; sourceTree = "<group>"; };
 		016280281F7B95D500FB1577 /* APPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +145,7 @@
 				0162802E1F7B95D500FB1577 /* AppDelegate.h */,
 				0162802F1F7B95D500FB1577 /* AppDelegate.m */,
 				016280371F7B95D500FB1577 /* Assets.xcassets */,
+				010296061F95A8A900C91A17 /* backgroud.png */,
 				016280391F7B95D500FB1577 /* LaunchScreen.storyboard */,
 				0162803C1F7B95D500FB1577 /* Info.plist */,
 				0162802B1F7B95D500FB1577 /* Supporting Files */,
@@ -195,8 +197,8 @@
 				01D139041F7E30C0000D45BD /* RootNavigationController.h */,
 				01D139051F7E30C0000D45BD /* RootNavigationController.m */,
 				016E57A51F8B49CB0049A098 /* FavoritesManageVC.h */,
-				016E57A61F8B49CB0049A098 /* FavoritesManageVC.m */,
 				01B14DE71F8C6E0B002BA591 /* FavoriteInnerManageVC.h */,
+				016E57A61F8B49CB0049A098 /* FavoritesManageVC.m */,
 				01B14DE81F8C6E0B002BA591 /* FavoriteInnerManageVC.m */,
 			);
 			name = View;
@@ -579,7 +581,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9RDTB937LX;
 				INFOPLIST_FILE = APPlayer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ajmide.APPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -594,7 +596,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9RDTB937LX;
 				INFOPLIST_FILE = APPlayer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ajmide.APPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";

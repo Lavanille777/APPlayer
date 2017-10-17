@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _sqlManager = [SQLManager initSqlManager];
     _iCarouselview = [[iCarousel alloc] initWithFrame:CGRectMake(0,-150,self.view.frame.size.width,self.view.frame.size.height)];
     //设置显示效果类型

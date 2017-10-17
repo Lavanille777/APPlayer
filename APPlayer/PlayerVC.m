@@ -37,7 +37,6 @@
         _playerLayer.backgroundColor = [UIColor blackColor].CGColor;
         [_PlayerView.layer addSublayer:_playerLayer];
     }];
-   
     return _PlayerView;
 }
 
