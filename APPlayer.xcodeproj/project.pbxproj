@@ -197,8 +197,8 @@
 				01D139041F7E30C0000D45BD /* RootNavigationController.h */,
 				01D139051F7E30C0000D45BD /* RootNavigationController.m */,
 				016E57A51F8B49CB0049A098 /* FavoritesManageVC.h */,
-				01B14DE71F8C6E0B002BA591 /* FavoriteInnerManageVC.h */,
 				016E57A61F8B49CB0049A098 /* FavoritesManageVC.m */,
+				01B14DE71F8C6E0B002BA591 /* FavoriteInnerManageVC.h */,
 				01B14DE81F8C6E0B002BA591 /* FavoriteInnerManageVC.m */,
 			);
 			name = View;

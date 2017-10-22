@@ -10,7 +10,7 @@
 #import <FMDatabase.h>
 #import "Video.h"
 #import "VideoList.h"
-@interface SQLManager : NSObject
+@interface SQLManager : NSObject <NSCopying>
 + (SQLManager *)initSqlManager;                                                     //获取sqlManager的单例方法
 - (NSMutableArray *)queryVideoByListName:(NSString *)listName;                      //通过收藏夹名称获取所有视频
 - (NSMutableArray *)queryFavoriteList;                                              //获取所有收藏夹

@@ -12,12 +12,27 @@
 
 static SQLManager *manager = nil;
 //创建单例数据库
-+ (SQLManager *)initSqlManager {
++ (instancetype)allocWithZone:(struct _NSZone *)zone
+{
     static dispatch_once_t onceToken;
+    //只会运行一次，且是线程安全的
     dispatch_once(&onceToken, ^{
-        manager = [[self alloc] init];
-        [manager createDataBaseIfNeeded];
+        if (manager == nil) {
+            manager = [super allocWithZone:zone];
+            [manager createDataBaseIfNeeded];
+        }
     });
+    return manager;
+}
+
+
++ (SQLManager *)initSqlManager {
+    
+    return [[self alloc]init];
+    
+}
+
+- (id)copyWithZone:(NSZone *)zone{
     return manager;
 }
 

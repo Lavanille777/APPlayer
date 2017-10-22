@@ -18,6 +18,7 @@
     [super viewDidLoad];
     
     _sqlManager = [SQLManager initSqlManager];
+    //布局 使用masonry布局似乎会出现问题
     _iCarouselview = [[iCarousel alloc] initWithFrame:CGRectMake(0,-150,self.view.frame.size.width,self.view.frame.size.height)];
     //设置显示效果类型
     _iCarouselview.type = iCarouselTypeCoverFlow;
@@ -29,6 +30,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    //页面刷新
     [_iCarouselview reloadData];
     [self.view layoutIfNeeded];
 }
@@ -47,16 +49,19 @@
 - (void)tempJump{
     if (_curVideo!=nil&&_curVideo.asset!=nil) {
         if (_url != nil) {
+            //若找得到地址则证明为视频，跳转至播放器
             [_target performSelector:@selector(jump::) withObject:_nameList withObject:_curVideo.name];
         }
     }
     else{
+        //找不到地址则证明是进入内页
         [_target performSelector:@selector(jump:) withObject:_str];
     }
     
     
 }
 - (void)carouselDidScroll:(iCarousel *)carousel {
+    //防止滚动时进入播放页导致读取了错误的视频
     _tapGesture.enabled = NO;
 }
 
@@ -65,6 +70,7 @@
     _str = [_nameList objectAtIndex:carousel.currentItemIndex];
     view.userInteractionEnabled = YES;
     _curVideo = [_sqlManager queryVideoFromVideoTable:_str];
+    //解析视频地址。。应该有办法简化掉
     if (_curVideo!=nil&&_curVideo.asset!=nil){
         PHImageManager *manager = [PHImageManager defaultManager];
         PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
@@ -77,6 +83,7 @@
             _url = urlAsset.URL;
         }];
     }
+    
     _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tempJump)];
     [view addGestureRecognizer:_tapGesture];
     [_tapGesture setNumberOfTapsRequired:1];
@@ -93,7 +100,7 @@
         PHImageRequestOptions*options = [[PHImageRequestOptions alloc]init];
         
         options.deliveryMode=PHImageRequestOptionsDeliveryModeFastFormat;
-        
+        //解析封面图片
         if (video.asset!=nil) {
             PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[video.asset] options:nil];
             PHAsset *asset = [assets firstObject];
@@ -133,7 +140,7 @@
         }
         case iCarouselOptionSpacing:
         {
-            //设置没个界面直接的间隙，默认为0.25
+            //设置没个界面直接的间隙
             return value * 2.5f;
         }
         default:

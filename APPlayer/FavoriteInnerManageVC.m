@@ -13,6 +13,11 @@
 @end
 
 @implementation FavoriteInnerManageVC
+static NSString *simpleTableIdentifier = @"videos";
+- (void)viewWillAppear:(BOOL)animated{
+    _favoriteList = [_sqlManager queryVideoByListName:_listName];
+    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,7 +48,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *simpleTableIdentifier = @"videos";
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier];
@@ -53,7 +58,7 @@
     }
     return cell;
 }
-
+#pragma mark - 添加视频方法
 -(void)addVideo{
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate: self];
     NSMutableArray *videoList = [[NSMutableArray alloc]init];
@@ -96,10 +101,5 @@
     return @[action0];
 }
 
-
-- (void)viewWillAppear:(BOOL)animated{
-    _favoriteList = [_sqlManager queryVideoByListName:_listName];
-    [self.tableView reloadData];
-}
 
 @end
