@@ -13,7 +13,7 @@
 #import <TZImagePickerController.h>
 #import <Photos/Photos.h>
 @interface MenuView : UIViewController
-@property (nonatomic) id target;                                        //将事件交给其他类处理
+@property (nonatomic, weak) id target;                                  //将事件交给其他类处理
 @property (nonatomic,strong) UILabel *label;                            //封面标题
 @property (nonatomic,strong) NSString *str;                             //将标题交给收藏夹内页
 @property (nonatomic, strong) Video *curVideo;                          //目前选中的视频
