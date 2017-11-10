@@ -15,6 +15,7 @@
 @implementation FavoriteInnerManageVC
 static NSString *simpleTableIdentifier = @"videos";
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     _favoriteList = [_sqlManager queryVideoByListName:_listName];
     [self.tableView reloadData];
 }
@@ -41,7 +42,7 @@ static NSString *simpleTableIdentifier = @"videos";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_favoriteList == nil) {
-        return 1;
+        return 0;
     }
     return [_favoriteList count];
 }
@@ -64,6 +65,7 @@ static NSString *simpleTableIdentifier = @"videos";
     NSMutableArray *videoList = [[NSMutableArray alloc]init];
     imagePickerVc.columnNumber = 6;
     imagePickerVc.allowPickingMultipleVideo = YES;
+    imagePickerVc.allowPickingImage = NO;
     // 得到用户选择的照片.
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         for (id asset in assets) {

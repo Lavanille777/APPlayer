@@ -12,5 +12,7 @@
 #import <TZImagePickerController.h>
 @interface FavoritesManageVC : UITableViewController
 @property (nonatomic, strong) NSMutableArray *favoriteList;     //收藏夹列表
+@property (strong, nonatomic) UIAlertController *creatFavAlert; //创建收藏夹提示
+@property (strong, nonatomic) UIAlertController *forbidSpace;   //禁止空格提示
 @property (nonatomic, strong) SQLManager *sqlManager;
 @end

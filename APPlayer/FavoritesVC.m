@@ -47,6 +47,7 @@
     [_cbBottom.view addSubview:_cbBottom.leftBtn];
     //旋转木马菜单
     _menu = [[MenuView alloc]init];
+    _menu.superviewName = @"FavoritesVC";
     _menu.target = self;
     _menu.nameList = [_sqlManager queryFavoriteList];
     [self.view addSubview:_menu.view];
@@ -56,18 +57,18 @@
     [_cbBottom.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
         make.left.equalTo(self.view.mas_left);
-        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 97));
+        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, autosizePad10_5(97)));
     }];
     //设置菜单布局
     [_cbBottom.leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_cbBottom.view.mas_centerY);
-        make.left.equalTo(_cbBottom.view.mas_left).with.offset(20);
+        make.left.equalTo(_cbBottom.view.mas_left).with.offset(autosizePad10_5(20));
     }];
     //旋转木马菜单布局
     [_menu.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.view.mas_centerY);
         make.centerX.equalTo(self.view.mas_centerX);
-        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 560));
+        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, autosizePad10_5(560)));
     }];
     //布局结束
     
@@ -75,7 +76,7 @@
 #pragma mark - 设置菜单弹出方法
 -(void)jumpToSetting{
     SettingMenuVC *smVC = [[SettingMenuVC alloc]init];
-    smVC.preferredContentSize = CGSizeMake(300, 300);
+    smVC.preferredContentSize = CGSizeMake(autosizePad10_5(300), autosizePad10_5(300));
     smVC.modalPresentationStyle = UIModalPresentationPopover;
     smVC.target = self;
     //  弹出视图的代理

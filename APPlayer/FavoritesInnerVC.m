@@ -7,7 +7,7 @@
 //
 
 #import "FavoritesInnerVC.h"
-#import "PlayerVC.h"
+
 @interface FavoritesInnerVC ()
 @end
 
@@ -15,6 +15,7 @@
 
 //页面即将显示时刷新列表
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor whiteColor];
     _menu.nameList = [_sqlManager queryVideoByListName:_ListName];
     [self.view layoutIfNeeded];
@@ -35,6 +36,7 @@
     _sqlManager = [SQLManager initSqlManager];
     //旋转木马菜单
     _menu = [[MenuView alloc]init];
+    _menu.superviewName = @"FavoritesInnerVC";
     _menu.target = self;
     _menu.nameList = [_sqlManager queryVideoByListName:_ListName];
     [self.view addSubview:_menu.view];
@@ -46,13 +48,13 @@
     [_cbBottom.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
         make.left.equalTo(self.view.mas_left);
-        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 97));
+        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, autosizePad10_5(97)));
     }];
     //旋转木马菜单布局
     [_menu.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.view.mas_centerY);
         make.centerX.equalTo(self.view.mas_centerX);
-        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 560));
+        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, autosizePad10_5(560)));
     }];
     //布局结束
 }
@@ -62,10 +64,10 @@
 }
 #pragma mark - 跳转至播放页方法
 -(void)jump: (id)sender :(id)sender2{
-    PlayerVC *PVC = [[PlayerVC alloc]init];
-    PVC.nameList = sender;
-    PVC.curName = sender2;
-    [self.navigationController pushViewController:PVC animated:true];
+    self.PVC = [[PlayerVC alloc]init];
+    self.PVC.urlList = sender;
+    self.PVC.playURL = sender2;
+    [self.navigationController pushViewController:self.PVC animated:true];
 }
 
 /*

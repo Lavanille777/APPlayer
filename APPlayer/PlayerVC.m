@@ -13,6 +13,7 @@
 
 @implementation PlayerVC
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     //页面即将显示时视频为暂停(或停止)状态
     self.view.backgroundColor = [UIColor whiteColor];
 }
@@ -27,16 +28,14 @@
 #pragma mark - 播放器视图初始化
 - (UIView* )PlayerView{
     _PlayerView = [[UIView alloc]init];
-    [self getURLWithResultHandler:^{
-         //获取视频本地URL
-        _playerItem = [[AVPlayerItem alloc] initWithURL:_playURL];
-        _player = [self player: _playerItem];
-        _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-        //播放器视图布局
-        _playerLayer.frame = CGRectMake(0, 60, [UIScreen mainScreen].bounds.size.width, 680);
-        _playerLayer.backgroundColor = [UIColor blackColor].CGColor;
-        [_PlayerView.layer addSublayer:_playerLayer];
-    }];
+    _playerItem = [[AVPlayerItem alloc] initWithURL:_playURL];
+    _player = [self player: _playerItem];
+    _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+    CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
+    //播放器视图布局
+    _playerLayer.frame = CGRectMake(0, rectStatus.size.height+self.navigationController.navigationBar.frame.size.height, SCREEN_W, SCREEN_H - rectStatus.size.height - self.navigationController.navigationBar.frame.size.height - autosizePad10_5(97));
+    _playerLayer.backgroundColor = [UIColor blackColor].CGColor;
+    [_PlayerView.layer addSublayer:_playerLayer];
     return _PlayerView;
 }
 
@@ -52,9 +51,9 @@
     [_cbBottom.leftBtn setTitle:@"上一集" forState:UIControlStateNormal];
     [_cbBottom.centerBtn setTitle:@"播放" forState:UIControlStateNormal];
     [_cbBottom.rightBth setTitle:@"下一集" forState:UIControlStateNormal];
-    _cbBottom.leftBtn.titleLabel.font = [UIFont systemFontOfSize:30];
-    _cbBottom.centerBtn.titleLabel.font = [UIFont systemFontOfSize:30];
-    _cbBottom.rightBth.titleLabel.font = [UIFont systemFontOfSize:30];
+    _cbBottom.leftBtn.titleLabel.font = [UIFont systemFontOfSize:autosizePad10_5(30)];
+    _cbBottom.centerBtn.titleLabel.font = [UIFont systemFontOfSize:autosizePad10_5(30)];
+    _cbBottom.rightBth.titleLabel.font = [UIFont systemFontOfSize:autosizePad10_5(30)];
     [_cbBottom.centerBtn addTarget:self action:@selector(playOrPause) forControlEvents:UIControlEventTouchUpInside];
     [_cbBottom.leftBtn addTarget:self action:@selector(lastEpisode) forControlEvents:UIControlEventTouchUpInside];
     [_cbBottom.rightBth addTarget:self action:@selector(nextEpisode) forControlEvents:UIControlEventTouchUpInside];
@@ -70,12 +69,12 @@
     [_cbBottom.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom);
         make.left.equalTo(self.view.mas_left);
-        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, 97));
+        make.size.mas_equalTo(CGSizeMake(self.view.frame.size.width, autosizePad10_5(97)));
     }];
     //上一集按钮布局
     [_cbBottom.leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_cbBottom.view.mas_centerY);
-        make.left.equalTo(_cbBottom.view.mas_left).with.offset(20);
+        make.left.equalTo(_cbBottom.view.mas_left).with.offset(autosizePad10_5(20));
     }];
     //播放暂停按钮布局
     [_cbBottom.centerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -85,51 +84,27 @@
     //下一集按钮布局
     [_cbBottom.rightBth mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_cbBottom.view.mas_centerY);
-        make.right.equalTo(_cbBottom.view.mas_right).with.offset(-20);
+        make.right.equalTo(_cbBottom.view.mas_right).with.offset(autosizePad10_5(-20));
     }];
     //布局结束
 }
-#pragma mark - 根据名称获取地址
-- (void)getURLWithResultHandler:(void (^)())resultHandler{
-    SQLManager *sqlManager = [SQLManager initSqlManager];
-    Video *curVideo = [sqlManager queryVideoFromVideoTable:_curName];
-    if (curVideo!=nil&&curVideo.asset!=nil){
-        PHImageManager *manager = [PHImageManager defaultManager];
-        PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-        options.version = PHImageRequestOptionsVersionCurrent;
-        options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
-        PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[curVideo.asset] options:nil];
-        PHAsset *asset = [assets firstObject];
-
-        [manager requestAVAssetForVideo:asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-            AVURLAsset *urlAsset = (AVURLAsset *)asset;
-            _playURL = urlAsset.URL;
-            dispatch_queue_t mainQueue = dispatch_get_main_queue();
-            dispatch_sync(mainQueue,^{
-                resultHandler();
-            });
-            
-        }];
-        
-    }
-}
 #pragma mark - 跳到上一集
 - (void)lastEpisode {
-    if ([_nameList indexOfObject:_curName]!=0) {
-        _curName = [_nameList objectAtIndex:[_nameList indexOfObject:_curName]-1];
+    if ([_urlList indexOfObject:_playURL]!=0) {
+        _playURL = [_urlList objectAtIndex:[_urlList indexOfObject:_playURL]-1];
     }
     else{
-        _curName = [_nameList objectAtIndex:[_nameList count]-1];
+        _playURL = [_urlList objectAtIndex:[_urlList count]-1];
     }
     [self refreshPlayer];
 }
 #pragma mark - 跳到下一集
 - (void)nextEpisode {
-    if ([_nameList indexOfObject:_curName]!=[_nameList count]-1) {
-        _curName = [_nameList objectAtIndex:[_nameList indexOfObject:_curName]+1];
+    if ([_urlList indexOfObject:_playURL]!=[_urlList count]-1) {
+        _playURL = [_urlList objectAtIndex:[_urlList indexOfObject:_playURL]+1];
     }
     else{
-        _curName = [_nameList objectAtIndex:0];
+        _playURL = [_urlList objectAtIndex:0];
     }
     [self refreshPlayer];
 }
@@ -137,11 +112,10 @@
 - (void)refreshPlayer {
     _playOrPauseFlag = NO;
     [self playOrPause];
-    [self getURLWithResultHandler:^{
-        _playerItem = [[AVPlayerItem alloc] initWithURL:_playURL];
-        [_player replaceCurrentItemWithPlayerItem:_playerItem];
-        [self.view layoutIfNeeded];
-    }];
+    _playerItem = [[AVPlayerItem alloc] initWithURL:_playURL];
+    [_player replaceCurrentItemWithPlayerItem:_playerItem];
+    [self.view layoutIfNeeded];
+    
 }
 #pragma mark - 播放或暂停方法
 -(void)playOrPause{

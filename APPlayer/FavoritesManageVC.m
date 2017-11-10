@@ -16,6 +16,7 @@
 static NSString *simpleTableIdentifier = @"videos";
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //列表刷新
     _favoriteList = [_sqlManager queryFavoriteList];
     [self.tableView reloadData];
@@ -49,7 +50,7 @@ static NSString *simpleTableIdentifier = @"videos";
         [_sqlManager deleteFavoriteList:cell.textLabel.text];
         // 收回左滑出现的按钮(退出编辑模式)
         tableView.editing = NO;
-        [self viewWillAppear:true];
+        [self viewWillAppear:YES];
     }];
     return @[action0];
 }
@@ -88,32 +89,33 @@ static NSString *simpleTableIdentifier = @"videos";
 #pragma mark - 添加收藏夹方法
 - (void)addFavorite {
     //弹出输入收藏夹名称的提示框
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入收藏夹名称" preferredStyle:UIAlertControllerStyleAlert];
+    self.creatFavAlert = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入收藏夹名称" preferredStyle:UIAlertControllerStyleAlert];
+    FavoritesManageVC __weak *weakself = self;
     //增加确定按钮
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [self.creatFavAlert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //获取输入框
-        UITextField *TextField = alertController.textFields.firstObject;
+        UITextField *TextField = weakself.creatFavAlert.textFields.firstObject;
         //若输入字符串包含空格则弹出错误提示并不会创建收藏夹
         if([TextField.text containsString:@" "])
         {
             NSLog(@"不允许包含空格");
-            UIAlertController *alertController1 = [UIAlertController alertControllerWithTitle:@"错误" message:@"不允许包含空格" preferredStyle:UIAlertControllerStyleAlert];
-            [alertController1 addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            weakself.forbidSpace = [UIAlertController alertControllerWithTitle:@"错误" message:@"不允许包含空格" preferredStyle:UIAlertControllerStyleAlert];
+            [weakself.forbidSpace addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 
             }]];
-            [self presentViewController:alertController1 animated:YES completion:nil];
+            [weakself presentViewController:weakself.forbidSpace animated:YES completion:nil];
         }
         else{
-            [self addVideos: TextField.text];
+            [weakself addVideos: TextField.text];
             [_sqlManager addFavoriteList:TextField.text :nil];
         }
     }]];
     //增加取消按钮
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+    [self.creatFavAlert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    [self.creatFavAlert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = @"名称";
     }];
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self presentViewController:self.creatFavAlert animated:YES completion:nil];
     
 }
 #pragma mark - 添加视频方法
@@ -122,6 +124,7 @@ static NSString *simpleTableIdentifier = @"videos";
     NSMutableArray *videoList = [[NSMutableArray alloc]init];
     imagePickerVc.columnNumber = 6;
     imagePickerVc.allowPickingMultipleVideo = YES;
+    imagePickerVc.allowPickingImage = NO;
     // 得到用户选择的照片.
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         for (id asset in assets) {
@@ -132,11 +135,11 @@ static NSString *simpleTableIdentifier = @"videos";
                 [videoList addObject:video];
             }
             else{
-                NSLog(@"不是");
+                NSLog(@"不是PHAsset");
             }
         }
         [_sqlManager addVideoToVideoList:listName :videoList];
-        [self viewWillAppear:true];
+        [self viewWillAppear:YES];
     }];
     [self presentViewController:imagePickerVc animated:YES completion:nil];
     

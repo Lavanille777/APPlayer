@@ -21,7 +21,6 @@
 @property (nonatomic ,strong) AVPlayerItem *playerItem;
 @property (nonatomic ,strong) ControllerBar *cbBottom;
 @property (nonatomic) BOOL playOrPauseFlag;
-@property (nonatomic ,strong) NSMutableArray *nameList;
-@property (nonatomic ,strong) NSString *curName;
+@property (nonatomic ,strong) NSMutableArray *urlList;
 @property (nonatomic ,strong) NSURL *playURL;
 @end

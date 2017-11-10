@@ -76,6 +76,7 @@
 		016E57B01F8B6E490049A098 /* SQLManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SQLManager.m; sourceTree = "<group>"; };
 		01B14DE71F8C6E0B002BA591 /* FavoriteInnerManageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FavoriteInnerManageVC.h; sourceTree = "<group>"; };
 		01B14DE81F8C6E0B002BA591 /* FavoriteInnerManageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FavoriteInnerManageVC.m; sourceTree = "<group>"; };
+		01CA21A61FB54E1E00E19C26 /* tools.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tools.pch; sourceTree = "<group>"; };
 		01D139011F7E2D38000D45BD /* SettingMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingMenuVC.h; sourceTree = "<group>"; };
 		01D139021F7E2D38000D45BD /* SettingMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingMenuVC.m; sourceTree = "<group>"; };
 		01D139041F7E30C0000D45BD /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigationController.h; sourceTree = "<group>"; };
@@ -157,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				0162802C1F7B95D500FB1577 /* main.m */,
+				01CA21A61FB54E1E00E19C26 /* tools.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -580,6 +582,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9RDTB937LX;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/APPlayer/tools.pch";
 				INFOPLIST_FILE = APPlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -595,6 +599,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9RDTB937LX;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/APPlayer/tools.pch";
 				INFOPLIST_FILE = APPlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

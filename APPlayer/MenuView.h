@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSURL *url;                               //将视频地址交给播放器页
 @property (nonatomic, strong) NSMutableArray *nameList;                 //旋转木马显示的名称列表
 @property (nonatomic, strong) iCarousel *iCarouselview;                 //旋转木马视图
-@property (nonatomic, strong) NSMutableArray *assetArray;              
+@property (nonatomic, strong) NSMutableArray *urlList;                  //视频地址列表
+@property (nonatomic, strong) NSString *superviewName;                  //父视图名称，以判别如何跳转
 @property (nonatomic, strong) SQLManager *sqlManager;
-@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @end

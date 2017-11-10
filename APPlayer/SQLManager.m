@@ -74,8 +74,8 @@ static SQLManager *manager = nil;
     FMResultSet *rs = [_db executeQuery:sql, listName];
     while ([rs next]) {
         NSString *names = [rs objectForColumn:@"videos"];
-        if ([names isKindOfClass:[NSNull class]] ) {
-            return nil;
+        if ([names isKindOfClass:[NSNull class]]||[names isEqualToString:@""]) {
+            return returnVideoList;
         }
         returnVideoList = [[names componentsSeparatedByString:@" "] mutableCopy];
     }
@@ -116,8 +116,7 @@ static SQLManager *manager = nil;
 //添加视频到收藏夹
 - (void)addVideoToVideoList:(NSString *)listName :(NSMutableArray *)videos {
     [self addVideoToVideoTable:videos];
-    NSString *videoString = [[NSString alloc]init];
-    videoString = @"";
+    NSString *videoString = @"";
     NSMutableArray *allVideos = [self videoListFilter:videos :listName];
     videoString = [self appendingString:videoString :allVideos];
     NSString *sql = @"update videoList set videos = ? where name = ?";
@@ -132,8 +131,7 @@ static SQLManager *manager = nil;
         return [var isEqualToString:video];
     }];
     [videoArray removeObjectsAtIndexes:indexSet];
-    NSString *videoString = [[NSString alloc]init];
-    videoString = @"";
+    NSString *videoString = @"";
     videoString = [self appendingString:videoString :videoArray];
     NSString *sql = @"update videoList set videos = ? where name = ?";
     [_db executeUpdate:sql, videoString ,listName];

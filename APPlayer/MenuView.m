@@ -19,13 +19,39 @@
     
     _sqlManager = [SQLManager initSqlManager];
     //布局 使用masonry布局似乎会出现问题
-    _iCarouselview = [[iCarousel alloc] initWithFrame:CGRectMake(0,-150,self.view.frame.size.width,self.view.frame.size.height)];
+    _iCarouselview = [[iCarousel alloc] initWithFrame:CGRectMake(0,autosizePad10_5(-150),self.view.frame.size.width,self.view.frame.size.height)];
     //设置显示效果类型
     _iCarouselview.type = iCarouselTypeCoverFlow;
     //设置代理
     _iCarouselview.dataSource = self;
     _iCarouselview.delegate = self;
     [self.view addSubview:_iCarouselview];
+    if ([self.superviewName isEqualToString:@"FavoritesInnerVC"]) {
+        [self resolveVideo];
+    }
+    
+}
+
+- (void)resolveVideo {
+    
+    _urlList = [[NSMutableArray alloc]init];
+    PHImageManager *manager = [PHImageManager defaultManager];
+    PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
+    options.version = PHImageRequestOptionsVersionCurrent;
+    options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
+    
+    for (NSString *str in _nameList) {
+        _curVideo = [_sqlManager queryVideoFromVideoTable:str];
+        if (_curVideo!=nil&&_curVideo.asset!=nil){
+            PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[_curVideo.asset] options:nil];
+            PHAsset *asset = [assets firstObject];
+            [manager requestAVAssetForVideo:asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+                AVURLAsset *urlAsset = (AVURLAsset *)asset;
+                [_urlList addObject:urlAsset.URL];
+            }];
+        }
+    }
+    
     
 }
 
@@ -47,53 +73,29 @@
 }
 
 - (void)tempJump{
-    if (_curVideo!=nil&&_curVideo.asset!=nil) {
-        if (_url != nil) {
-            //若找得到地址则证明为视频，跳转至播放器
-            [_target performSelector:@selector(jump::) withObject:_nameList withObject:_curVideo.name];
+    if ([self.superviewName isEqualToString:@"FavoritesInnerVC"]) {
+        if (_url != nil && _urlList != nil) {
+            [_target performSelector:@selector(jump::) withObject:_urlList withObject:_url];
         }
     }
-    else{
-        //找不到地址则证明是进入内页
+    else if([self.superviewName isEqualToString:@"FavoritesVC"]){
         [_target performSelector:@selector(jump:) withObject:_str];
     }
-    
-    
-}
-- (void)carouselDidScroll:(iCarousel *)carousel {
-    //防止滚动时进入播放页导致读取了错误的视频
-    _tapGesture.enabled = NO;
 }
 
-- (void)carouselDidEndScrollingAnimation:(iCarousel *) carousel{
-    UIView *view = carousel.currentItemView;
-    _str = [_nameList objectAtIndex:carousel.currentItemIndex];
-    view.userInteractionEnabled = YES;
-    _curVideo = [_sqlManager queryVideoFromVideoTable:_str];
-    //解析视频地址。。应该有办法简化掉
-    if (_curVideo!=nil&&_curVideo.asset!=nil){
-        PHImageManager *manager = [PHImageManager defaultManager];
-        PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-        options.version = PHImageRequestOptionsVersionCurrent;
-        options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
-        PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[_curVideo.asset] options:nil];
-        PHAsset *asset = [assets firstObject];
-        [manager requestAVAssetForVideo:asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
-            AVURLAsset *urlAsset = (AVURLAsset *)asset;
-            _url = urlAsset.URL;
-        }];
+- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index {
+    _str = [_nameList objectAtIndex:index];
+    if (_urlList  != nil) {
+        _url = [_urlList objectAtIndex:index];
     }
-    
-    _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tempJump)];
-    [view addGestureRecognizer:_tapGesture];
-    [_tapGesture setNumberOfTapsRequired:1];
+    [self tempJump];
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
     _label = nil;
     if (view == nil)
     {
-        view =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 450.0f, 450.0f)] ;
+        view =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, autosizePad10_5(450.0f), autosizePad10_5(450.0f))] ;
         Video *video = [_sqlManager queryVideoFromVideoTable:[_nameList objectAtIndex:index]];
         
         PHImageManager *manager = [PHImageManager defaultManager];
@@ -104,17 +106,22 @@
         if (video.asset!=nil) {
             PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[video.asset] options:nil];
             PHAsset *asset = [assets firstObject];
-            [manager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:options resultHandler:^(UIImage *resultImage, NSDictionary *info)
+            [manager requestImageForAsset:asset targetSize:CGSizeMake(autosizePad10_5(900.0f), autosizePad10_5(900.0f)) contentMode:PHImageContentModeDefault options:options resultHandler:^(UIImage *resultImage, NSDictionary *info)
              {
                  ((UIImageView *)view).image = resultImage;
              }];
         }
+        else {
+            ((UIImageView *)view).backgroundColor = [UIColor blueColor];
+            
+        }
         
-        _label = [[UILabel alloc] initWithFrame:view.bounds];
+        _label = [[UILabel alloc] init];
         _label.backgroundColor = [UIColor clearColor];
-        _label.textAlignment = NSTextAlignmentCenter;
         _label.font = [_label.font fontWithSize:50];
         _label.tag = 1;
+        _label.frame = CGRectMake(0, view.frame.size.height + autosizePad10_5(10), view.frame.size.width, autosizePad10_5(50));
+        _label.textAlignment = NSTextAlignmentCenter;
         [view addSubview:_label];
         [self.view addSubview:view];
     }
