@@ -47,8 +47,20 @@
             PHAsset *asset = [assets firstObject];
             [manager requestAVAssetForVideo:asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
                 AVURLAsset *urlAsset = (AVURLAsset *)asset;
-                [_urlList addObject:urlAsset.URL];
+                if(urlAsset)
+                {
+                    [_urlList addObject:urlAsset.URL];
+                }
+                else
+                {
+                    [_sqlManager removeVideoFromFavoriteList:_listName :_curVideo.name];
+                    [_nameList removeObjectAtIndex:[_nameList indexOfObject:str]];
+                    [self.iCarouselview reloadData];
+                }
             }];
+        }
+        else {
+            NSLog(@"为空");
         }
     }
     
@@ -95,41 +107,43 @@
     _label = nil;
     if (view == nil)
     {
-        view =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, autosizePad10_5(450.0f), autosizePad10_5(450.0f))] ;
-        Video *video = [_sqlManager queryVideoFromVideoTable:[_nameList objectAtIndex:index]];
-        
-        PHImageManager *manager = [PHImageManager defaultManager];
-        PHImageRequestOptions*options = [[PHImageRequestOptions alloc]init];
-        
-        options.deliveryMode=PHImageRequestOptionsDeliveryModeFastFormat;
-        //解析封面图片
-        if (video.asset!=nil) {
-            PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[video.asset] options:nil];
-            PHAsset *asset = [assets firstObject];
-            [manager requestImageForAsset:asset targetSize:CGSizeMake(autosizePad10_5(900.0f), autosizePad10_5(900.0f)) contentMode:PHImageContentModeDefault options:options resultHandler:^(UIImage *resultImage, NSDictionary *info)
-             {
-                 ((UIImageView *)view).image = resultImage;
-             }];
-        }
-        else {
-            ((UIImageView *)view).backgroundColor = [UIColor blueColor];
+        view =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, autosizePad10_5(450.0f), autosizePad10_5(450.0f))];
+        if([_nameList count] > 0)
+        {
+            Video *video = [_sqlManager queryVideoFromVideoTable:[_nameList objectAtIndex:index]];
+            PHImageManager *manager = [PHImageManager defaultManager];
+            PHImageRequestOptions*options = [[PHImageRequestOptions alloc]init];
             
+            options.deliveryMode=PHImageRequestOptionsDeliveryModeFastFormat;
+            //解析封面图片
+            if (video.asset!=nil) {
+                PHFetchResult *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[video.asset] options:nil];
+                PHAsset *asset = [assets firstObject];
+                [manager requestImageForAsset:asset targetSize:CGSizeMake(autosizePad10_5(900.0f), autosizePad10_5(900.0f)) contentMode:PHImageContentModeDefault options:options resultHandler:^(UIImage *resultImage, NSDictionary *info)
+                 {
+                     ((UIImageView *)view).image = resultImage;
+                 }];
+            }
+            else {
+                ((UIImageView *)view).backgroundColor = [UIColor blueColor];
+                
+            }
+            
+            _label = [[UILabel alloc] init];
+            _label.backgroundColor = [UIColor clearColor];
+            _label.font = [_label.font fontWithSize:50];
+            _label.tag = 1;
+            _label.frame = CGRectMake(0, view.frame.size.height + autosizePad10_5(10), view.frame.size.width, autosizePad10_5(50));
+            _label.textAlignment = NSTextAlignmentCenter;
+            [view addSubview:_label];
+            [self.view addSubview:view];
         }
-        
-        _label = [[UILabel alloc] init];
-        _label.backgroundColor = [UIColor clearColor];
-        _label.font = [_label.font fontWithSize:50];
-        _label.tag = 1;
-        _label.frame = CGRectMake(0, view.frame.size.height + autosizePad10_5(10), view.frame.size.width, autosizePad10_5(50));
-        _label.textAlignment = NSTextAlignmentCenter;
-        [view addSubview:_label];
-        [self.view addSubview:view];
     }
     else
     {
         _label = (UILabel *)[view viewWithTag:1];
     }
-    carousel.name = [_nameList objectAtIndex:index];
+//    carousel.name = [_nameList objectAtIndex:index];
     _label.text = [_nameList objectAtIndex:index];
     return view;
 }

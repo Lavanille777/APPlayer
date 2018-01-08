@@ -98,7 +98,6 @@ static NSString *simpleTableIdentifier = @"videos";
         //若输入字符串包含空格则弹出错误提示并不会创建收藏夹
         if([TextField.text containsString:@" "])
         {
-            NSLog(@"不允许包含空格");
             weakself.forbidSpace = [UIAlertController alertControllerWithTitle:@"错误" message:@"不允许包含空格" preferredStyle:UIAlertControllerStyleAlert];
             [weakself.forbidSpace addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 
@@ -122,7 +121,7 @@ static NSString *simpleTableIdentifier = @"videos";
 -(void)addVideos: (NSString *)listName{
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate: self];
     NSMutableArray *videoList = [[NSMutableArray alloc]init];
-    imagePickerVc.columnNumber = 6;
+//    imagePickerVc.columnNumber = 6;
     imagePickerVc.allowPickingMultipleVideo = YES;
     imagePickerVc.allowPickingImage = NO;
     // 得到用户选择的照片.

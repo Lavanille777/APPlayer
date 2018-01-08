@@ -63,7 +63,7 @@ static NSString *simpleTableIdentifier = @"videos";
 -(void)addVideo{
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate: self];
     NSMutableArray *videoList = [[NSMutableArray alloc]init];
-    imagePickerVc.columnNumber = 6;
+//    imagePickerVc.columnNumber = 6;
     imagePickerVc.allowPickingMultipleVideo = YES;
     imagePickerVc.allowPickingImage = NO;
     // 得到用户选择的照片.
@@ -93,7 +93,6 @@ static NSString *simpleTableIdentifier = @"videos";
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewRowAction *action0 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        NSLog(@"点击了删除");
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath: indexPath];
         [_sqlManager removeVideoFromFavoriteList:_listName :(NSString *)cell.textLabel.text];
         [self viewWillAppear:true];

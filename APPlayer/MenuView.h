@@ -22,5 +22,6 @@
 @property (nonatomic, strong) iCarousel *iCarouselview;                 //旋转木马视图
 @property (nonatomic, strong) NSMutableArray *urlList;                  //视频地址列表
 @property (nonatomic, strong) NSString *superviewName;                  //父视图名称，以判别如何跳转
+@property (nonatomic, strong) NSString *listName;                       //收藏夹名称
 @property (nonatomic, strong) SQLManager *sqlManager;
 @end

@@ -39,6 +39,7 @@
     _menu.superviewName = @"FavoritesInnerVC";
     _menu.target = self;
     _menu.nameList = [_sqlManager queryVideoByListName:_ListName];
+    _menu.listName = _ListName;
     [self.view addSubview:_menu.view];
     //底部控制条
     _cbBottom = [[ControllerBar alloc]init];
